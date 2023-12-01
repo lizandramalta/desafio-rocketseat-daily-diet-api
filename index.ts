@@ -1,7 +1,7 @@
 import env from './src/env'
-import app from './src/app'
+import api from './src/api'
 
-app
+api
   .listen({
     port: env.PORT
   })
