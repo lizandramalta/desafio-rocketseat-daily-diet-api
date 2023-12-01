@@ -4,7 +4,7 @@ import { usersRoutes } from './routes/users'
 const api = fastify()
 
 api.register(usersRoutes, {
-  prefix: 'user',
+  prefix: 'user'
 })
 
 export default api
