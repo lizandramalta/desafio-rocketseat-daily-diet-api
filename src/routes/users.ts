@@ -45,13 +45,15 @@ export async function usersRoutes(api: FastifyInstance) {
       return reply.status(409).send('Usuário já existe.')
     }
 
+    const userId = crypto.randomUUID()
+
     await knex('users').insert({
-      id: crypto.randomUUID(),
+      id: userId,
       name,
       email,
       password
     })
 
-    return reply.status(201).send()
+    return reply.status(200).send({ id: userId, name, email })
   })
 }

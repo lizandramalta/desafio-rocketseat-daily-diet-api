@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/lizandramalta/desafio-rocketseat-daily-diet-api#readme",
   "dependencies": {
+    "@fastify/cors": "^8.4.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
     "knex": "^3.0.1",
