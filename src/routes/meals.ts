@@ -12,7 +12,7 @@ export async function mealsRoutes(api: FastifyInstance) {
 
     const meals = await knex('meals').where('user', user).select()
 
-    return reply.status(200).send({ meals })
+    return reply.status(200).send(meals)
   })
 
   api.post('/', async (request, reply) => {

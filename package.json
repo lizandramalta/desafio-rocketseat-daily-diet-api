@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "tsx watch index.ts",
-    "test": "vitest",
+    "test": "vitest --single-thread",
     "knex": "node --import tsx ./node_modules/knex/bin/cli.js",
     "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
