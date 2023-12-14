@@ -51,7 +51,7 @@ export async function usersRoutes(api: FastifyInstance) {
       id: userId,
       name,
       email,
-      password
+      password: password as string
     })
 
     return reply.status(200).send({ id: userId, name, email })
