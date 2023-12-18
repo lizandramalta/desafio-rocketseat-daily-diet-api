@@ -10,7 +10,11 @@ export async function mealsRoutes(api: FastifyInstance) {
 
     const { user } = getMealParamsSchema.parse(request.params)
 
-    const meals = await knex('meals').where('user', user).select()
+    const meals = await knex('meals')
+      .where('user', user)
+      .select('id', 'name', 'description', 'onDiet', 'time', 'date')
+      .orderBy('date', 'desc')
+      .orderBy('time', 'desc')
 
     return reply.status(200).send(meals)
   })
@@ -35,7 +39,7 @@ export async function mealsRoutes(api: FastifyInstance) {
       description,
       time,
       date,
-      on_diet: onDiet
+      onDiet
     })
 
     return reply.status(201).send()
