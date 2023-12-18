@@ -1,6 +1,6 @@
 # Changelog
 
-## [Versão 1.0.0] - 13/12/2023
+## [Versão 0.1.0] - 13/12/2023
 
 - Added:
     - Configuração inicial: ambiente, testes, linter e prettier.
