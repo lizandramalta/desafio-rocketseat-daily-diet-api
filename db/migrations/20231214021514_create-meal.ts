@@ -5,12 +5,12 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('id').primary()
     table.uuid('user').notNullable().index()
     table.text('name').notNullable()
-    table.text('description').notNullable()
-    table.boolean('on_diet').notNullable()
+    table.text('description')
+    table.boolean('onDiet').notNullable()
     table.time('time').notNullable()
     table.date('date').notNullable()
-    table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable()
-    table.timestamp('updated_at').defaultTo(knex.fn.now()).notNullable()
+    table.timestamp('createdAt').defaultTo(knex.fn.now()).notNullable()
+    table.timestamp('updatedAt').defaultTo(knex.fn.now()).notNullable()
   })
 }
 
