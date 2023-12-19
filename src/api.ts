@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
-import { usersRoutes } from './routes/users'
+import { mealsRoutes, usersRoutes } from './routes'
 
 const api = fastify()
 
@@ -13,6 +13,10 @@ api.register(cors, {
 
 api.register(usersRoutes, {
   prefix: 'user'
+})
+
+api.register(mealsRoutes, {
+  prefix: 'meals'
 })
 
 export default api

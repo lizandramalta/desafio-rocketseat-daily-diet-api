@@ -25,7 +25,7 @@ describe('Users routes', () => {
         email: 'teste@example.com',
         password: '1111111'
       })
-      .expect(201)
+      .expect(200)
   })
 
   it('should not to be able to create a new user if there is already a user with the same email', async () => {
