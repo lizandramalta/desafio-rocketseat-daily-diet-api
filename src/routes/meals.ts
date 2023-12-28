@@ -23,7 +23,7 @@ export async function mealsRoutes(api: FastifyInstance) {
     const getMealParamsSchema = z.object({
       user: z.string().uuid(),
       name: z.string(),
-      description: z.string(),
+      description: z.string().default(''),
       time: z.string(),
       date: z.string(),
       onDiet: z.boolean()
