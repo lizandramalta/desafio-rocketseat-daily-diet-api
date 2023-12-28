@@ -30,8 +30,7 @@ describe('Meals routes', () => {
         user: '33fc4a26-afab-47a2-8e60-746329f4d298',
         name: 'First meal',
         description: 'Pasta',
-        time: '20:30',
-        date: '13/12/2023',
+        timestamp: '2023-12-13-20-30',
         onDiet: false
       })
       .expect(201)
@@ -49,8 +48,7 @@ describe('Meals routes', () => {
       user: id,
       name: 'First meal',
       description: 'Strogonoff',
-      time: '20:30',
-      date: '13/12/2023',
+      timestamp: '2023-12-13-20-30',
       onDiet: false
     })
 
@@ -58,8 +56,7 @@ describe('Meals routes', () => {
       user: id,
       name: 'Second meal',
       description: 'Pasta',
-      time: '20:30',
-      date: '13/12/2023',
+      timestamp: '2023-12-13-20-30',
       onDiet: false
     })
 
@@ -82,8 +79,7 @@ describe('Meals routes', () => {
       user: firstUserId,
       name: 'First meal',
       description: 'Strogonoff',
-      time: '20:30',
-      date: '13/12/2023',
+      timestamp: '2023-12-13-20-30',
       onDiet: false
     })
 
@@ -91,8 +87,7 @@ describe('Meals routes', () => {
       user: firstUserId,
       name: 'Second meal',
       description: 'Pasta',
-      time: '20:30',
-      date: '13/12/2023',
+      timestamp: '2023-12-13-20-30',
       onDiet: false
     })
 
