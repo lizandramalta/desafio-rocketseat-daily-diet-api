@@ -12,9 +12,8 @@ export async function mealsRoutes(api: FastifyInstance) {
 
     const meals = await knex('meals')
       .where('user', user)
-      .select('id', 'name', 'description', 'onDiet', 'time', 'date')
-      .orderBy('date', 'desc')
-      .orderBy('time', 'desc')
+      .select('id', 'name', 'description', 'onDiet', 'timestamp')
+      .orderBy('timestamp', 'desc')
 
     return reply.status(200).send(meals)
   })
@@ -23,13 +22,12 @@ export async function mealsRoutes(api: FastifyInstance) {
     const getMealParamsSchema = z.object({
       user: z.string().uuid(),
       name: z.string(),
-      description: z.string(),
-      time: z.string(),
-      date: z.string(),
+      description: z.string().default(''),
+      timestamp: z.string(),
       onDiet: z.boolean()
     })
 
-    const { date, description, name, onDiet, time, user } =
+    const { timestamp, description, name, onDiet, user } =
       getMealParamsSchema.parse(request.body)
 
     await knex('meals').insert({
@@ -37,8 +35,7 @@ export async function mealsRoutes(api: FastifyInstance) {
       user,
       name,
       description,
-      time,
-      date,
+      timestamp,
       onDiet
     })
 
