@@ -112,4 +112,68 @@ describe('Meals routes', () => {
 
     expect(secondUserMeals.length).toEqual(0)
   })
+
+  it('should be able to delete a meal', async () => {
+    const { body } = await request(api.server).post('/user/register').send({
+      name: 'Usuário Teste',
+      email: 'teste@example.com',
+      password: '1111111'
+    })
+    const { id } = body
+
+    await request(api.server).post('/meals').send({
+      user: id,
+      name: 'First meal',
+      description: 'Strogonoff',
+      timestamp: '2023-12-13-20-30',
+      onDiet: false
+    })
+
+    const { body: meals } = await request(api.server).get(`/meals/${id}`).send()
+
+    await request(api.server)
+      .delete('/meals')
+      .send({
+        id: meals[0].id,
+        user: id
+      })
+      .expect(201)
+  })
+
+  it('should not to be able to delete a meal if user is not its owner', async () => {
+    const { body } = await request(api.server).post('/user/register').send({
+      name: 'Usuário Teste',
+      email: 'teste@example.com',
+      password: '1111111'
+    })
+    const { id } = body
+
+    await request(api.server).post('/meals').send({
+      user: id,
+      name: 'First meal',
+      description: 'Strogonoff',
+      timestamp: '2023-12-13-20-30',
+      onDiet: false
+    })
+
+    const { body: meals } = await request(api.server).get(`/meals/${id}`).send()
+
+    await request(api.server)
+      .delete('/meals')
+      .send({
+        id: meals[0].id,
+        user: '3332446e-3614-46dd-8006-49eb4b8408e5'
+      })
+      .expect(403)
+  })
+
+  it('should not to be able to delete a meal if it does not exists', async () => {
+    await request(api.server)
+      .delete('/meals')
+      .send({
+        id: '3332446e-3614-46dd-8006-49eb4b8408e5',
+        user: '3332446e-3614-46dd-8006-49eb4b8408e5'
+      })
+      .expect(404)
+  })
 })

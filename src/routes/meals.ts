@@ -41,4 +41,27 @@ export async function mealsRoutes(api: FastifyInstance) {
 
     return reply.status(201).send()
   })
+
+  api.delete('/', async (request, reply) => {
+    const getMealParamsSchema = z.object({
+      id: z.string().uuid(),
+      user: z.string().uuid()
+    })
+
+    const { id, user } = getMealParamsSchema.parse(request.body)
+    const meal = await knex('meals').where({ id }).first()
+
+    if (!meal) {
+      return reply.status(404).send('Refeição não existe.')
+    } else if (meal.user !== user) {
+      return reply
+        .status(403)
+        .send(
+          'Essa refeição não pertence a esse usuário. Não é possível excluí-la.'
+        )
+    }
+
+    await knex('meals').where({ id, user }).del()
+    return reply.status(201).send()
+  })
 }
