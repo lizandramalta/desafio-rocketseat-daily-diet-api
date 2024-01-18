@@ -1,5 +1,10 @@
 # Changelog
 
+## [Versão 0.4.0] - 17/01/2024
+
+Added:
+    - Serviço de excluir as refeições.
+
 ## [Versão 0.3.0] - 15/01/2024
 
 Changed:
