@@ -1,5 +1,10 @@
 # Changelog
 
+## [Versão 0.5.0] - 19/01/2024
+
+Added:
+    - Serviço de editar as refeições.
+
 ## [Versão 0.4.0] - 17/01/2024
 
 Added:

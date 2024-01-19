@@ -64,4 +64,39 @@ export async function mealsRoutes(api: FastifyInstance) {
     await knex('meals').where({ id, user }).del()
     return reply.status(201).send()
   })
+
+  api.put('/', async (request, reply) => {
+    const getMealParamsSchema = z.object({
+      id: z.string().uuid(),
+      user: z.string().uuid(),
+      name: z.string(),
+      description: z.string().default(''),
+      timestamp: z.string(),
+      onDiet: z.boolean()
+    })
+
+    const { description, id, name, onDiet, timestamp, user } =
+      getMealParamsSchema.parse(request.body)
+
+    const meal = await knex('meals').where({ id }).first()
+
+    if (!meal) {
+      return reply.status(404).send('Refeição não existe.')
+    } else if (meal.user !== user) {
+      return reply
+        .status(403)
+        .send(
+          'Essa refeição não pertence a esse usuário. Não é possível editá-la.'
+        )
+    }
+
+    await knex('meals').where({ id, user }).update({
+      description,
+      name,
+      onDiet,
+      timestamp
+    })
+
+    return reply.status(201).send()
+  })
 }
