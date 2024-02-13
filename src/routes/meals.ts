@@ -1,6 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import knex from '../database'
 import { z } from 'zod'
+import moment from 'moment'
+import 'moment/locale/pt-br'
 
 export async function mealsRoutes(api: FastifyInstance) {
   api.get('/:user', async (request, reply) => {
@@ -15,7 +17,39 @@ export async function mealsRoutes(api: FastifyInstance) {
       .select('id', 'name', 'description', 'onDiet', 'timestamp')
       .orderBy('timestamp', 'desc')
 
-    return reply.status(200).send(meals)
+    const mealsOnDiet = meals.reduce((count, meal) => {
+      return count + (meal.onDiet ? 1 : 0)
+    }, 0)
+
+    const mealsOffDiet = meals.reduce((count, meal) => {
+      return count + (meal.onDiet ? 0 : 1)
+    }, 0)
+
+    let bestSequence = 0
+    let currentSequence = 0
+    meals.forEach((meal) => {
+      if (meal.onDiet) {
+        currentSequence++
+        if (currentSequence > bestSequence) bestSequence = currentSequence
+      } else {
+        currentSequence = 0
+      }
+    })
+
+    const totalMeals = meals.length
+
+    const percentageMealsOnDiet = ((mealsOnDiet / totalMeals) * 100).toFixed(2)
+
+    return reply.status(200).send({
+      meals,
+      metrics: {
+        bestSequence,
+        mealsOffDiet,
+        mealsOnDiet,
+        percentageMealsOnDiet,
+        totalMeals
+      }
+    })
   })
 
   api.post('/', async (request, reply) => {
@@ -90,12 +124,15 @@ export async function mealsRoutes(api: FastifyInstance) {
         )
     }
 
-    await knex('meals').where({ id, user }).update({
-      description,
-      name,
-      onDiet,
-      timestamp
-    })
+    await knex('meals')
+      .where({ id, user })
+      .update({
+        description,
+        name,
+        onDiet,
+        timestamp,
+        updatedAt: moment().format('YYYY-MM-DD HH:mm:ss')
+      })
 
     return reply.status(201).send()
   })
