@@ -1,5 +1,10 @@
 # Changelog
 
+## [Versão 1.0.0] - 13/02/2024
+
+Added:
+    - Métricas do usuário.
+
 ## [Versão 0.5.0] - 19/01/2024
 
 Added:
